@@ -11,3 +11,8 @@ docker build -t "cypress/m1:9.3.1" .
 ```
 docker run -it -v $PWD:/e2e -w /e2e cypress/m1:9.3.1
 ```
+
+## Prebuilt on Dockerhub
+```
+docker pull silvanadrian/cy-m1:9.3.1
+```
