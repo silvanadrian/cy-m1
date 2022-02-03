@@ -21,7 +21,7 @@ RUN apt-get update && \
 # build cypress binary
 RUN git clone https://github.com/cypress-io/cypress.git --depth 1 --branch v9.3.1 \
   && cd /cypress \
-  && yarn \ 
+  && yarn \
   && yarn binary-build --version 9.3.1
 
 FROM --platform=linux/arm64 node:16-buster-slim
@@ -47,6 +47,7 @@ RUN apt-get update && \
     libxtst6 \
     xauth \
     xvfb \
+    chromium \
     # clean up
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean \
@@ -56,7 +57,7 @@ RUN apt-get update && \
 # Copy cypress binary from intermediate container
 COPY --from=builder /tmp/cypress-build/linux/build/linux-arm64-unpacked /root/.cache/Cypress/9.3.1/Cypress
 
-RUN npm install -g cypress@9.3.1 && \ 
+RUN npm install -g cypress@9.3.1 && \
     cypress verify
 
 ENTRYPOINT ["cypress", "run"]
